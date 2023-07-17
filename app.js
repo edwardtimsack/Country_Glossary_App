@@ -1,65 +1,15 @@
-// let selectDiv = document.querySelector("select");
-// let countries = document.querySelector(".countries-grid")
-// let searchInput = document.querySelector('input');
-//   selectDiv.addEventListener("change",
-
-// function (event){
-//     fetch("https://restcountries.com/v3.1/all")
-//     .then(function(res){
-//         return res.json()
-//     })
-//     .then(function(data){
-//         const selectedContinent = selectDiv.value;
-//                 const filteredCountries = data.filter(function(country) {
-//                   return country.continents[0] === selectedContinent;
-//                 })
-//                 const countryNames = filteredCountries.map(function(country) {
-//                         return country.name.common;
-//                 });
-//                 console.log(event)
-       
-//                 // clear countries div
-//                 countries.innerHTML = ''
-        
-//         for(let i = 0; i < data.length; i++){
-//             if(data[i].continents[0] == event.target.value){
-              
-//                 console.log(data[i].name.common);
-//                 const countryCard = document.createElement("div");
-//                 const countryFlag = document.createElement("img");
-//                 countryFlag.src = data[i].flags.png;
-
-//                 countryCard.appendChild(countryFlag);
-
-//                 const countryName = document.createElement("h1");
-//                 countryName.innerHTML = data[i].name.common;
-//                 countryCard.appendChild(countryName);
-
-//                 const countryPopulation = document.createElement('p');
-//                 countryPopulation.innerHTML = data[i].population;
-//                 countryCard.appendChild(countryPopulation);
-//                 countries.append(countryCard);
-
-
-//                 // search function 
-//                 searchInput.addEventListener('click', function(event){
-                  
-//                 })
-
-//             }
-          
-//         }
-//     })
-
-// })
-
 let selectDiv = document.querySelector("select");
 let countries = document.querySelector(".countries-grid");
 let searchInput = document.querySelector('input');
-
+let county = document.querySelector(".countries-grid div")
+let moreDetails = document.querySelector('.container');
+let exitButton = document.querySelector('.exit svg');
 // Set the default value of the select dropdown to "Africa"
 // Africa is set has the default value 
-selectDiv.value = "Africa";
+// selectDiv.value = "Africa";
+exitButton.addEventListener('click', function(){
+  moreDetails.style.display = 'none';
+})
 
 selectDiv.addEventListener("change", function(event) {
   fetch("https://restcountries.com/v3.1/all")
@@ -95,10 +45,41 @@ selectDiv.addEventListener("change", function(event) {
         countryPopulation.innerHTML = `Population: ${data[i].population}`;
         countryBox.appendChild(countryPopulation);
 
+        countryBox.addEventListener('click', function(){
+          console.log('hello')
+          moreDetails.style.display = 'block';
+
+          let countryImg = document.querySelector('.flags')
+          let countryNames = document.querySelector('.country_title');
+          let countryCapitals = document.querySelector('.capital');
+          let countryPopulations = document.querySelector('.population');
+          let countryRegion = document.querySelector('.region');
+          let countrySubRegion = document.querySelector('.sub_region');
+          let countryLanguage = document.querySelector('.language');
+          let countryTimeZone = document.querySelector('.time_zone')
+
+
+
+          countryNames.innerHTML = country.name.common;
+          countryImg.src = country.flags.png;
+          countryCapitals.innerHTML = `Capital: ${data[i].region}`;
+          countryPopulations.innerHTML = `Population: ${data[i].population}`;
+          countryRegion.innerHTML = `Region: ${data[i].region}`;
+          countrySubRegion.innerHTML = `Sub-Region: ${data[i].subregion}`;
+          countryLanguage.innerHTML = `Language: ${data[i].language}`;
+
+
+          // const countryCard = document.createElement('div');
+    
+        })
         countries.append(countryBox);
       }
     });
 });
+
+function showDetails(){
+
+}
 
 // Search function placeholder
 searchInput.addEventListener('input', function(event) {
